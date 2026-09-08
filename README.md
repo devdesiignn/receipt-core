@@ -11,8 +11,8 @@ Shared schema, migrations, and data model for the [Receipt Intelligence Platform
 
 ## What this does not do
 
-- Does not run a server or expose an API — that's `receipt-api`.
-- Does not process or extract data from receipt images — that's `receipt-etl`.
+- Does not run a server or expose an API.
+- Does not process or extract data from receipt images.
 - Does not assume every consuming service is written in the same language.
 
 ## Status
