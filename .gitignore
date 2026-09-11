@@ -10,14 +10,15 @@ Thumbs.db
 # Environment / secrets
 .env
 .env.*
+!.env.example
 *.local
 
 # Logs
 *.log
 
 # Dependency/build directories
-# node_modules/
-# __pycache__/
-# venv/
-# dist/
-# build/
+node_modules/
+__pycache__/
+venv/
+dist/
+build/
