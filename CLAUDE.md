@@ -61,6 +61,12 @@ One JSON Schema file per table, matching the migrations 1:1: `store.schema.json`
 - `SCHEMA.md` — the "why" behind the schema: field tiers (required/common/rare), the `extraction_reviews` design (sentinel `field_name` values, multi-extractor conflict handling, `flagged_reason` vs `status`).
 - `DECISIONS.md` — the broader engineering decision log: tooling choices (node-pg-migrate vs Prisma, UUID vs serial, env file structure), not just schema reasoning. Read this before revisiting any "why did we do it this way" question rather than re-deriving it.
 
+## Linting & formatting
+
+- `npm run lint` — ESLint (`eslint.config.js`, flat config).
+- `npm run format` / `npm run format:check` — Prettier (`.prettierrc.json`).
+- A husky pre-commit hook (`.husky/pre-commit`) runs `lint-staged` automatically on every commit, which lints/formats staged `.js` files and formats staged `.json`/`.md`/`.yml`/`.yaml` files. `prepare` (auto-run by `npm install`) wires up husky's git hooks.
+
 ## Scope boundaries (from README)
 
 This repo does **not**:
