@@ -1,0 +1,59 @@
+{
+  "name": "receipt-core",
+  "version": "1.0.0",
+  "description": "Shared schema, migrations, and data model for the Receipt Intelligence Platform — the contract every other service in the set depends on.",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "docker:up": "docker compose up -d",
+    "docker:up:prod": "docker compose --env-file .env.production up -d",
+    "docker:down": "docker compose down",
+    "docker:ps": "docker compose ps",
+    "db:ready": "docker compose exec postgres pg_isready -U receipt_core",
+    "db:psql": "docker compose exec -it postgres psql -U receipt_core -d receipt_core_dev",
+    "migrate:create": "node-pg-migrate create",
+    "migrate:dev": "dotenv -e .env -- node-pg-migrate up",
+    "migrate:dev:down": "dotenv -e .env -- node-pg-migrate down",
+    "migrate:prod": "dotenv -e .env.production -- node-pg-migrate up",
+    "migrate:prod:down": "dotenv -e .env.production -- node-pg-migrate down",
+    "db:seed:dev": "dotenv -e .env -- node seeds/run.js",
+    "pretest": "npm run docker:up && npm run migrate:dev && npm run db:seed:dev",
+    "test": "dotenv -e .env -- node --test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devdesiignn/receipt-core.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devdesiignn/receipt-core/issues"
+  },
+  "homepage": "https://github.com/devdesiignn/receipt-core#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@faker-js/faker": "^10.6.0",
+    "dotenv-cli": "^11.0.0",
+    "eslint": "^10.10.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
+    "node-pg-migrate": "^9.0.0",
+    "pg": "^8.23.0",
+    "prettier": "^3.9.6"
+  }
+}
