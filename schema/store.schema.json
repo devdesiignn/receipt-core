@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/devdesiignn/receipt-core/schema/store.schema.json",
+  "title": "Store",
+  "type": "object",
+  "required": ["id", "name", "address"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "name": { "type": "string" },
+    "address": { "type": "string" },
+    "phone": { "type": ["string", "null"] },
+    "email": { "type": ["string", "null"] },
+    "website": { "type": ["string", "null"] },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/devdesiignn/receipt-core/schema/line_item.schema.json",
+  "title": "LineItem",
+  "type": "object",
+  "required": ["description", "quantity", "unit_price", "line_total", "line_order"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "receipt_id": { "type": "string", "format": "uuid" },
+    "description": { "type": "string" },
+    "quantity": { "type": "number" },
+    "unit_price": { "type": "number" },
+    "line_total": { "type": "number" },
+    "line_order": { "type": "integer" }
+  }
+}
