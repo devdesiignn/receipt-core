@@ -6,6 +6,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "docker:start": "node scripts/docker-start.js",
     "docker:up": "docker compose up -d --wait",
     "docker:up:prod": "docker compose --env-file .env.production up -d --wait",
     "docker:down": "docker compose down",

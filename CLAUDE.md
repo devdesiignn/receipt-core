@@ -12,6 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `docker-compose.yml` runs Postgres 16 for local development. It reads `PGUSER`/`PGPASSWORD`/`PGDATABASE`/`PGPORT` from `.env` — Docker Compose auto-loads a file literally named `.env`, which is also the file dev migration/seed scripts load directly. One file, no sync step, no duplication.
 
+- If Docker Desktop's engine isn't running yet, `npm run docker:start` (`node scripts/docker-start.js`) launches it and polls until it responds — an opt-in convenience, not chained into `bootstrap:dev`/`pretest`, since the Docker Desktop install path it uses (`scripts/docker-start.js`) is hardcoded to this machine and won't be portable elsewhere.
 - Start (dev): `npm run docker:up` (`docker compose up -d --wait` — `--wait` blocks until the healthcheck passes, so Postgres is actually ready to accept connections before the command returns)
 - Start against `.env.production` instead (only relevant if Postgres is ever self-hosted via Docker for prod — see below): `npm run docker:up:prod` (`docker compose --env-file .env.production up -d --wait`)
 - Stop: `npm run docker:down` (`docker compose down`; data persists in the `receipt_core_pgdata` volume — run `docker compose down -v` directly to also wipe the volume)
