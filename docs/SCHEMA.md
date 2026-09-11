@@ -1,4 +1,4 @@
-# receipt-core — Schema Design
+# Schema Design
 
 ## Approach
 
@@ -20,21 +20,28 @@ The contract an extractor writes against:
 
 ```json
 {
-  "total": 4300.0,
+  "id": "44d21dc0-ada2-4b24-9ad4-91800c4922a9",
+  "store_id": "6105a8cf-f678-48da-8ce2-89cfe24fb61a",
+  "source_image_id": "img_full_001",
+  "transaction_ref": "INV-2026-0042",
   "date": "2026-01-15",
+  "total": 4300.0,
   "content_hash": "hash_full_receipt_001"
 }
 ```
 
-**Anything an extractor is uncertain about** — a low-confidence field, a disagreement between two extraction attempts, a missed item — goes into `extraction_reviews` instead of being guessed at, matching `schemas/extraction_review.schema.json`.
+**Anything an extractor is uncertain about** — a low-confidence field, a disagreement between two extraction attempts, a missed item — goes into `extraction_reviews`, matching `schemas/extraction_review.schema.json`.
 
 ```json
 {
+  "id": "6dbdc6dd-37ff-42f9-bb7b-661740759ac4",
+  "receipt_id": "44d21dc0-ada2-4b24-9ad4-91800c4922a9",
   "field_name": "total",
   "extractor_source": "extractor-a",
   "extracted_value": "4300.00",
   "confidence_score": 0.612,
-  "flagged_reason": "low_confidence"
+  "flagged_reason": "low_confidence",
+  "status": "pending"
 }
 ```
 

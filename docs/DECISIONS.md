@@ -1,4 +1,4 @@
-# receipt-core — Engineering Decisions
+# Engineering Decisions
 
 A running log of the non-obvious choices made building this repo, and why. Schema-specific reasoning lives in [SCHEMA.md](./SCHEMA.md); this covers everything else plus the schema decisions that needed real back-and-forth to land on.
 
