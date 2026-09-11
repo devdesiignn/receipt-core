@@ -16,7 +16,7 @@ Every table also has a `created_at` column (type `timestamptz` — a timestamp t
 
 The contract an extractor writes against:
 
-**Successfully extracted data** goes into `stores` / `receipts` / `line_items`, matching `schema/store.schema.json`, `schema/receipt.schema.json`, and `schema/line_item.schema.json`.
+**Successfully extracted data** goes into `stores` / `receipts` / `line_items`, matching `schemas/store.schema.json`, `schemas/receipt.schema.json`, and `schemas/line_item.schema.json`.
 
 ```json
 {
@@ -26,7 +26,7 @@ The contract an extractor writes against:
 }
 ```
 
-**Anything an extractor is uncertain about** — a low-confidence field, a disagreement between two extraction attempts, a missed item — goes into `extraction_reviews` instead of being guessed at, matching `schema/extraction_review.schema.json`.
+**Anything an extractor is uncertain about** — a low-confidence field, a disagreement between two extraction attempts, a missed item — goes into `extraction_reviews` instead of being guessed at, matching `schemas/extraction_review.schema.json`.
 
 ```json
 {

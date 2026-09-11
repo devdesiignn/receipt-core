@@ -46,13 +46,13 @@ npm scripts:
 - `seeds/random.js` — randomly generated records via `@faker-js/faker`, layered on top for volume/variety. Not deterministic — re-running produces different (but still valid) rows.
 - `seeds/run.js` — the entry point `db:seed:dev` calls. **Truncates all 4 tables first** (`TRUNCATE ... CASCADE`), then runs `seedFixed` + `seedRandom` inside one transaction — safe to re-run any number of times, since it always resets to a clean state before inserting.
 
-## Tests (`test/`)
+## Tests (`tests/`)
 
-- `test/schema.test.js` — verifies migrations produced the expected structure: all 4 tables exist, the unique index on `receipts.content_hash` exists, both enums (`flagged_reason_type`, `review_status_type`) exist with the expected values.
-- `test/seed.test.js` — verifies the seeded data is internally consistent: rows present in every table, every FK actually resolves (receipts→stores, line_items→receipts, extraction_reviews→receipts and →line_items), no duplicate `content_hash`, no `extraction_reviews.status` outside the known enum values.
+- `tests/schema.test.js` — verifies migrations produced the expected structure: all 4 tables exist, the unique index on `receipts.content_hash` exists, both enums (`flagged_reason_type`, `review_status_type`) exist with the expected values.
+- `tests/seed.test.js` — verifies the seeded data is internally consistent: rows present in every table, every FK actually resolves (receipts→stores, line_items→receipts, extraction_reviews→receipts and →line_items), no duplicate `content_hash`, no `extraction_reviews.status` outside the known enum values.
 - `npm test` is self-sufficient — its `pretest` script runs `docker:up` → `migrate:dev` → `db:seed:dev` automatically before the tests run, so a single `npm test` is enough with no manual setup.
 
-## Data contract (`schema/`)
+## Data contract (`schemas/`)
 
 One JSON Schema file per table, matching the migrations 1:1: `store.schema.json`, `receipt.schema.json`, `line_item.schema.json`, `extraction_review.schema.json`. `receipt.schema.json` references `line_item.schema.json` via `$ref` rather than embedding it. These are what other (possibly non-Node) services in the platform validate against — not the migration files, which are internal to this repo only.
 
