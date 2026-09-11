@@ -12,8 +12,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `docker-compose.yml` runs Postgres 16 for local development. It reads `PGUSER`/`PGPASSWORD`/`PGDATABASE`/`PGPORT` from `.env` — Docker Compose auto-loads a file literally named `.env`, which is also the file dev migration/seed scripts load directly. One file, no sync step, no duplication.
 
-- Start (dev): `npm run docker:up` (`docker compose up -d`)
-- Start against `.env.production` instead (only relevant if Postgres is ever self-hosted via Docker for prod — see below): `npm run docker:up:prod` (`docker compose --env-file .env.production up -d`)
+- Start (dev): `npm run docker:up` (`docker compose up -d --wait` — `--wait` blocks until the healthcheck passes, so Postgres is actually ready to accept connections before the command returns)
+- Start against `.env.production` instead (only relevant if Postgres is ever self-hosted via Docker for prod — see below): `npm run docker:up:prod` (`docker compose --env-file .env.production up -d --wait`)
 - Stop: `npm run docker:down` (`docker compose down`; data persists in the `receipt_core_pgdata` volume — run `docker compose down -v` directly to also wipe the volume)
 - Check status: `npm run docker:ps` (`docker compose ps`)
 - Check the DB is accepting connections: `npm run db:ready` (`docker compose exec postgres pg_isready -U receipt_core`)
@@ -39,6 +39,8 @@ npm scripts:
 - `npm run migrate:dev` / `npm run migrate:dev:down` — apply/revert migrations against `.env`.
 - `npm run migrate:prod` / `npm run migrate:prod:down` — same, against `.env.production`.
 - `npm run db:seed:dev` — runs `seeds/run.js` against `.env`; seeding is dev-only, no prod seed script.
+- `npm run bootstrap:dev` — `docker:up` → `migrate:dev` → `db:seed:dev`, chained. The one command to go from nothing to a fully migrated, seeded local database.
+- `npm run bootstrap:prod` — `docker:up:prod` → `migrate:prod` (no seed step — seeding is dev-only). Only relevant if Postgres is self-hosted via Docker for prod.
 
 ## Seed data (`seeds/`)
 
@@ -50,7 +52,7 @@ npm scripts:
 
 - `tests/schema.test.js` — verifies migrations produced the expected structure: all 4 tables exist, the unique index on `receipts.content_hash` exists, both enums (`flagged_reason_type`, `review_status_type`) exist with the expected values.
 - `tests/seed.test.js` — verifies the seeded data is internally consistent: rows present in every table, every FK actually resolves (receipts→stores, line_items→receipts, extraction_reviews→receipts and →line_items), no duplicate `content_hash`, no `extraction_reviews.status` outside the known enum values.
-- `npm test` is self-sufficient — its `pretest` script runs `docker:up` → `migrate:dev` → `db:seed:dev` automatically before the tests run, so a single `npm test` is enough with no manual setup.
+- `npm test` is self-sufficient — its `pretest` script runs `bootstrap:dev` automatically before the tests run, so a single `npm test` is enough with no manual setup.
 
 ## Data contract (`schemas/`)
 

@@ -21,13 +21,11 @@ Requires Docker and Node.js.
 
 ```bash
 npm install
-npm run docker:up      # start local Postgres
-npm run migrate:dev    # apply migrations
-npm run db:seed:dev    # load synthetic seed data
-npm test               # verify schema + seed integrity
+npm run bootstrap:dev  # start local Postgres, apply migrations, load synthetic seed data
+npm test                # verify schema + seed integrity
 ```
 
-`npm test` runs the first three steps automatically if they haven't been run yet, so `npm install && npm test` is enough to go from a clean checkout to a fully migrated, seeded, and verified local database.
+`npm test` runs `bootstrap:dev` automatically if it hasn't been run yet, so `npm install && npm test` is enough to go from a clean checkout to a fully migrated, seeded, and verified local database.
 
 See [CLAUDE.md](./CLAUDE.md) for the full command reference, [docs/SCHEMA.md](./docs/SCHEMA.md) for a column-by-column walkthrough of every table, and [docs/DECISIONS.md](./docs/DECISIONS.md) for the reasoning behind the non-obvious choices.
 
