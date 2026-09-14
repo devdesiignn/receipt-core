@@ -6,8 +6,14 @@
   "required": ["id", "name", "address"],
   "properties": {
     "id": { "type": "string", "format": "uuid" },
-    "name": { "type": "string" },
-    "address": { "type": "string" },
+    "name": {
+      "type": "string",
+      "description": "Together with address, unique per store — guards against the same physical store being recorded twice as separate rows."
+    },
+    "address": {
+      "type": "string",
+      "description": "Together with name, unique per store. Two branches of the same chain at different addresses remain distinct rows."
+    },
     "phone": { "type": ["string", "null"] },
     "email": { "type": ["string", "null"] },
     "website": { "type": ["string", "null"] },

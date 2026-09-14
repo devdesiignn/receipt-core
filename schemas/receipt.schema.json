@@ -30,7 +30,10 @@
     "consumption_tax": { "type": ["number", "null"] },
     "total": { "type": "number" },
     "total_in_words": { "type": ["string", "null"] },
-    "content_hash": { "type": "string" },
+    "content_hash": {
+      "type": "string",
+      "description": "Fingerprint of key receipt fields, unique per receipt. Guards against the same physical receipt being ingested twice (e.g. re-photographed)."
+    },
     "extras": {
       "type": ["object", "null"],
       "description": "Store-specific or one-off fields not promoted to a dedicated column: barcode/QR presence, website, items-count line, promotional or return-policy footer text, secondary reference numbers, etc.",

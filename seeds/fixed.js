@@ -5,6 +5,7 @@
 
 const STORE_SUPREME = "11111111-1111-1111-1111-111111111111";
 const STORE_MOMROTA = "22222222-2222-2222-2222-222222222222";
+const STORE_SUPREME_BRANCH2 = "33333333-3333-3333-3333-333333333333";
 
 const RECEIPT_FULL = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
 const RECEIPT_MINIMAL = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
@@ -29,6 +30,15 @@ export const seedFixed = async (client) => {
     `INSERT INTO stores (id, name, address)
      VALUES ($1, 'Momrota Pharmacy', '45 Herbert Macaulay Way, Yaba, Lagos')`,
     [STORE_MOMROTA]
+  );
+
+  // Same store name, different address: a second branch of Supreme Pharmacy.
+  // Exercises that the stores(name, address) unique constraint keys off the
+  // pair, not name alone — two branches of the same chain are valid, distinct rows.
+  await client.query(
+    `INSERT INTO stores (id, name, address)
+     VALUES ($1, 'Supreme Pharmacy', '88 Awolowo Road, Ikoyi, Lagos')`,
+    [STORE_SUPREME_BRANCH2]
   );
 
   // A receipt with every optional field filled in

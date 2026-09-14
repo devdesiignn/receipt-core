@@ -34,6 +34,22 @@ test("receipts.content_hash has a unique index", async () => {
   assert.ok(rows.length > 0, "expected a unique index on receipts.content_hash");
 });
 
+test("stores(name, address) unique constraint rejects a duplicate pair", async () => {
+  const { rows: existing } = await client.query("SELECT name, address FROM stores LIMIT 1");
+  assert.ok(existing.length > 0, "expected at least one seeded store to test against");
+  const { name, address } = existing[0];
+
+  await client.query("BEGIN");
+  try {
+    await assert.rejects(
+      client.query("INSERT INTO stores (name, address) VALUES ($1, $2)", [name, address]),
+      /duplicate key value violates unique constraint/
+    );
+  } finally {
+    await client.query("ROLLBACK");
+  }
+});
+
 test("flagged_reason_type and review_status_type enums exist with expected values", async () => {
   const { rows } = await client.query(
     `SELECT t.typname, e.enumlabel

@@ -59,6 +59,8 @@ Core store identity.
 | `website`    | text        | yes       | Store website, if listed. Only 1 of 7 sample stores had this, hence nullable.         |
 | `created_at` | timestamptz | no        | When this store row was created in the database (not when the physical store opened). |
 
+**Why `name` + `address` have a unique constraint:** without it, nothing stops the same physical store being inserted twice as two separate rows with different `id`s. The pair is used rather than `name` alone, since two different branches of the same chain could share a name but sit at different addresses — that's meant to remain two valid, separate rows. This is an exact-string-match constraint, same limitation as `receipts.content_hash`: two addresses that mean the same place but are formatted slightly differently (e.g. "St" vs "Street") won't be caught as duplicates.
+
 ## `receipts`
 
 One row per receipt.
