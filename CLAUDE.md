@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `receipt-core` is the shared schema/data-contract repo for the [Receipt Intelligence Platform](https://github.com/devdesiignn/receipt-intelligence-platform). It defines the core entities (`stores`, `receipts`, `line_items`, `extraction_reviews`), the migrations that evolve that schema, and synthetic seed data — all consumed by other services in the platform, which may be written in different languages.
 
-**Status: initial schema complete.** All 4 core tables are migrated, documented, seeded, and covered by automated tests (`npm test`). Local Postgres is provisioned via Docker Compose — see below for the full setup.
+**Status: initial schema complete.** All 4 core tables are migrated, documented, seeded, and covered by automated tests (`npm test`). Local Postgres is provisioned via Docker Compose — see below for the full setup. Schema evolves via additive migrations after the initial 4 (e.g. constraints added later) — check `migrations/` for the current full list rather than assuming only 4 files exist.
 
 ## Local Postgres (dev)
 
